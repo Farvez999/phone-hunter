@@ -9,6 +9,16 @@ const displayPhone = phones => {
     phoneContainer.textContent = '';
     // Dispaly 10 item only
     phones = phones.slice(0, 10)
+
+    //Search no phone found
+    const noPhoneMsg = document.getElementById('search-no-phone-msg');
+    if (phones.length === 0) {
+        noPhoneMsg.classList.remove('d-none');
+    }
+    else {
+        noPhoneMsg.classList.add('d-none')
+    }
+
     phones.forEach(phone => {
         const divPhone = document.createElement('div');
         divPhone.classList.add('col');
@@ -31,4 +41,4 @@ const searchBtn = document.getElementById('search-btn').addEventListener('click'
     loadPhones(searchText)
 })
 
-loadPhones();
+// loadPhones();
