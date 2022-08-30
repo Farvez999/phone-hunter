@@ -32,13 +32,27 @@ const displayPhone = phones => {
         `;
         phoneContainer.appendChild(divPhone)
     })
-    console.log(phones);
+    // loader Stop 
+    toggleSpineer(false);
 }
 
 const searchBtn = document.getElementById('search-btn').addEventListener('click', function () {
+    // loader Start 
+    toggleSpineer(true);
+
     const searchField = document.getElementById('search-field');
     const searchText = searchField.value;
     loadPhones(searchText)
 })
+
+const toggleSpineer = isLoading => {
+    const loaderDiv = document.getElementById('loader');
+    if (isLoading) {
+        loaderDiv.classList.remove('d-none');
+    }
+    else {
+        loaderDiv.classList.add('d-none');
+    }
+}
 
 // loadPhones();
