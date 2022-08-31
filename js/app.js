@@ -35,7 +35,7 @@ const displayPhone = (phones, datalimit) => {
             <div class="card-body">
                 <h5 class="card-title">${phone.phone_name}</h5>
                 <p class="card-text">${phone.brand}</div>
-                <button onclick="loadPhoneDetails('${phone.slug}')" href="#" class="btn btn-primary">Details</button>
+                <button onclick="loadPhoneDetails('${phone.slug}')" href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailsModal">Details</button>
         </div>
         `;
         phoneContainer.appendChild(divPhone)
@@ -84,7 +84,21 @@ const loadPhoneDetails = async id => {
     const url = `https://openapi.programming-hero.com/api/phone/${id}`;
     const res = await fetch(url);
     const data = await res.json();
-    console.log(data.data);
+    displayPhoneDetails(data.data);
+}
+
+const displayPhoneDetails = phone => {
+    const modalTitle = document.getElementById('detailsModalTitle');
+    modalTitle.innerText = phone.name;
+    const modelDetails = document.getElementById('model-details');
+    modelDetails.innerHTML = `
+    <p>Release Date: ${phone.releaseDate ? phone.releaseDate : 'No Found Release Date'}</p>
+    <p>brand: ${phone.brand ? phone.brand : 'No Found brand'}</p>
+    <p>Chip Set: ${phone.mainFeatures ? phone.mainFeatures.chipSet : 'No Found Chip Set'}</p>
+    <p>Display Size: ${phone.mainFeatures ? phone.mainFeatures.displaySize : 'No Found Display Size'}</p>
+    <p>Memory: ${phone.mainFeatures ? phone.mainFeatures.memory : 'No Found Memory'}</p>
+    `;
+    console.log(phone);
 }
 
 // loadPhones();
