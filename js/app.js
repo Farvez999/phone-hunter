@@ -33,8 +33,9 @@ const displayPhone = (phones, datalimit) => {
         <div class="card">
             <img src="${phone.image}" class="card-img-top" alt="...">
             <div class="card-body">
-            <h5 class="card-title">${phone.phone_name}</h5>
-            <p class="card-text">${phone.brand}</div>
+                <h5 class="card-title">${phone.phone_name}</h5>
+                <p class="card-text">${phone.brand}</div>
+                <button onclick="loadPhoneDetails('${phone.slug}')" href="#" class="btn btn-primary">Details</button>
         </div>
         `;
         phoneContainer.appendChild(divPhone)
@@ -53,8 +54,17 @@ const processSearch = (dataLimit) => {
 }
 
 const searchBtn = document.getElementById('search-btn').addEventListener('click', function () {
-    processSearch(10)
+    processSearch(10);
 })
+
+//search input field enter key handler javascript
+document.getElementById('search-field')
+    .addEventListener("keyup", function (event) {
+        event.preventDefault();
+        if (event.key === 'Enter') {
+            processSearch(10);
+        }
+    });
 
 const toggleSpineer = isLoading => {
     const loaderDiv = document.getElementById('loader');
@@ -69,5 +79,12 @@ const toggleSpineer = isLoading => {
 document.getElementById('btn-show-all').addEventListener('click', function () {
     processSearch();
 })
+
+const loadPhoneDetails = async id => {
+    const url = `https://openapi.programming-hero.com/api/phone/${id}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    console.log(data.data);
+}
 
 // loadPhones();
